@@ -1,10 +1,8 @@
 package com.puzzles.movieticket.domain;
 
-public interface UserAccount {
+public interface User {
 
-	Long getUserId();
-
-	void setUserId(Long userId);
+	int getUserId();
 
 	String getUserEmailId();
 
@@ -21,5 +19,11 @@ public interface UserAccount {
 	String getLastName();
 
 	void setLastName(String lastName);
+
+	void setPhone(Integer phone);
+
+	Integer getPhone();
+
+	void setUserId(int userId);
 
 }

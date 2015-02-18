@@ -1,19 +1,39 @@
 package com.puzzles.movieticket.domain;
 
-import com.puzzles.movieticket.domain.TheaterAddress;
+
 
 public interface Theater {
 
-	Long getTheaterId();
+	int getTheaterId();
 
-	void setTheaterId(Long theaterId);
+	void setTheaterId(int theaterId);
 
 	String getTheaterName();
 
 	void setTheaterName(String theaterName);
 
-	TheaterAddress getTheaterAddress();
+	int getScreenNo();
 
-	void setTheaterAddress(TheaterAddress theaterAddress);
+	void setScreenNo(int screenNo);	
+
+	String getTheaterAddressLine();
+
+	void setTheaterAddressLine(String theaterAddressLine);
+
+	void setTheaterCity(String theaterCity);
+
+	String getTheaterCity();
+
+	int getTheaterZip();
+
+	void setTheaterZip(int theaterZip);
+
+	String getTheaterState();
+
+	void setTheaterState(String theaterState);
+
+	int getHelpLineNo();
+
+	void setHelpLineNo(int helpLineNo);
 
 }

@@ -6,12 +6,16 @@ import com.puzzles.movieticket.domain.Movie;
 
 public interface MovieService {
 
-	Movie getMovieByMovieId(Long MovieId);
+	//Movie getMovieByMovieId(Long MovieId);
 
 	List<Movie> getAllCurrentMovie();
 
 	List<Movie> getUpComingMovies();
 
-	Movie getMovieByMovieName(String movieName);
+	List<Movie> getMovieByMovieName(String movieName);
+
+	Movie getMovieByMovieId(int movieId);
+
+	Movie addMovie(Movie movie);
 
 }

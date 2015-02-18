@@ -1,23 +1,58 @@
 package com.puzzles.movieticket.domain.impl;
 
+
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import com.puzzles.movieticket.domain.Theater;
-import com.puzzles.movieticket.domain.TheaterAddress;
 
+
+
+
+
+@Entity
+@Table(name="theater")
 public class TheaterImpl implements Theater{
-
-	private Long theaterId;
 	
+	@Id
+	@Column(name="theater_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int theaterId;
+	
+	@Column(name="theater_name")
 	private String theaterName;
 	
-	private TheaterAddress theaterAddress;
-
+	
+	@Column(name="address_line")
+	private String theaterAddressLine;
+	
+	@Column(name="city")
+	private String theaterCity;
+	
+	@Column(name="zipcode")
+	private int theaterZip;
+	
+	@Column(name="state")
+	private String theaterState;
+	
+	@Column(name="helpline_no")
+	private int helpLineNo;
+	
+	@Column(name="no_of_screens")
+	private int screenNo;
+	
 	@Override
-	public Long getTheaterId() {
+	public int getTheaterId() {
 		return theaterId;
 	}
 
 	@Override
-	public void setTheaterId(Long theaterId) {
+	public void setTheaterId(int theaterId) {
 		this.theaterId = theaterId;
 	}
 
@@ -31,15 +66,68 @@ public class TheaterImpl implements Theater{
 		this.theaterName = theaterName;
 	}
 
+
+
 	@Override
-	public TheaterAddress getTheaterAddress() {
-		return theaterAddress;
+	public int getScreenNo() {
+		return screenNo;
 	}
 
 	@Override
-	public void setTheaterAddress(TheaterAddress theaterAddress) {
-		this.theaterAddress = theaterAddress;
+	public void setScreenNo(int screenNo) {
+		this.screenNo = screenNo;
 	}
 	
+	@Override
+	public String getTheaterAddressLine() {
+		return theaterAddressLine;
+	}
+
+	@Override
+	public void setTheaterAddressLine(String theaterAddressLine) {
+		this.theaterAddressLine = theaterAddressLine;
+	}
+
+	@Override
+	public String getTheaterCity() {
+		return theaterCity;
+	}
+
+	@Override
+	public void setTheaterCity(String theaterCity) {
+		this.theaterCity = theaterCity;
+	}
+
+	@Override
+	public int getTheaterZip() {
+		return theaterZip;
+	}
+
+	@Override
+	public void setTheaterZip(int theaterZip) {
+		this.theaterZip = theaterZip;
+	}
+
+	@Override
+	public String getTheaterState() {
+		return theaterState;
+	}
+
+	@Override
+	public void setTheaterState(String theaterState) {
+		this.theaterState = theaterState;
+	}
+
+	@Override
+	public int getHelpLineNo() {
+		return helpLineNo;
+	}
+	
+	@Override
+	public void setHelpLineNo(int helpLineNo) {
+		this.helpLineNo = helpLineNo;
+	}
+	
+
 	
 }
