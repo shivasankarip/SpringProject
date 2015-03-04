@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.puzzles.movieticket.dao.MovieDao;
 import com.puzzles.movieticket.domain.Movie;
 import com.puzzles.movieticket.service.MovieService;
+import com.puzzles.movieticket.service.exception.InvalidFieldException;
 
 @Service
 @Transactional
@@ -21,7 +22,11 @@ public class MovieServiceImpl implements MovieService{
 	@Override
 	public Movie getMovieByMovieId(int movieId)
 	{
-		return movieDao.getMovieByMovieId(movieId);
+		Movie found= movieDao.getMovieByMovieId(movieId);
+		if(found==null){
+			throw new InvalidFieldException("movie not found"+ movieId);
+		}
+		return found;
 		
 	}
 	

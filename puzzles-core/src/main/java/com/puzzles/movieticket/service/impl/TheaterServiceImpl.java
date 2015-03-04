@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.puzzles.movieticket.dao.TheaterDao;
 import com.puzzles.movieticket.domain.Theater;
 import com.puzzles.movieticket.service.TheaterService;
+import com.puzzles.movieticket.service.exception.InvalidFieldException;
 
 @Service
 @Transactional
@@ -20,7 +21,11 @@ public class TheaterServiceImpl implements TheaterService{
 	
 	@Override
 	public Theater getTheaterByTheaterId(int theaterId){
-		return theaterDao.getTheaterByTheaterId(theaterId);
+		Theater found= theaterDao.getTheaterByTheaterId(theaterId);
+		if(found==null){
+			throw new InvalidFieldException("theater not found for id : "+ theaterId);
+		}
+		return found;
 	}
 	
 	@Override
@@ -30,17 +35,29 @@ public class TheaterServiceImpl implements TheaterService{
 	
 	@Override
 	public List<Theater> getTheaterByTheaterName(String theaterName){
-		return theaterDao.getTheaterByTheaterName(theaterName);
+		List<Theater> found= theaterDao.getTheaterByTheaterName(theaterName);
+		if(found.size()==0){
+			throw new InvalidFieldException("theater not found for name :"+ theaterName);
+		}
+		return found;
 	}
 	
 	@Override
 	public List<Theater> getTheaterByTheaterCity(String theaterCity){
-		return theaterDao.getTheaterByTheaterCity(theaterCity);
+		List<Theater> found= theaterDao.getTheaterByTheaterCity(theaterCity);
+		if(found.size()==0){
+			throw new InvalidFieldException("theater not found for city :"+ theaterCity);
+		}
+		return found;
 	}
 
 	@Override
 	public List<Theater> getTheaterByTheaterZip(int theaterZip){
-		return theaterDao.getTheaterByTheaterZip(theaterZip);
+		List<Theater> found= theaterDao.getTheaterByTheaterZip(theaterZip);
+		if(found.size()==0){
+			throw new InvalidFieldException("theater not found for zip :"+ theaterZip);
+		}
+		return found;
 	}
 	
 

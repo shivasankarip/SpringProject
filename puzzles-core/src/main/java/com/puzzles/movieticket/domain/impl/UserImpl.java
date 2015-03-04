@@ -31,7 +31,7 @@ public class UserImpl implements User{
 	private String lastName;
 	
 	@Column(name="phone")
-	private Integer phone;
+	private int phone;
 
 	@Override
 	public int getUserId() {
@@ -83,12 +83,12 @@ public class UserImpl implements User{
 	}
 	
 	@Override
-	public Integer getPhone() {
+	public int getPhone() {
 		return phone;
 	}
 	
 	@Override
-	public void setPhone(Integer phone) {
+	public void setPhone(int phone) {
 		this.phone = phone;
 	}
 	
