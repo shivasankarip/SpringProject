@@ -12,9 +12,6 @@ import javax.persistence.Table;
 import com.puzzles.movieticket.domain.Theater;
 
 
-
-
-
 @Entity
 @Table(name="theater")
 public class TheaterImpl implements Theater{

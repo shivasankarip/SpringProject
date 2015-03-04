@@ -2,19 +2,22 @@ package com.puzzles.movieticket.service.impl;
 
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.puzzles.movieticket.dao.UserDao;
 import com.puzzles.movieticket.domain.User;
 import com.puzzles.movieticket.service.UserService;
+import com.puzzles.movieticket.service.exception.InvalidFieldException;
 
 @Service
 
 public class UserServiceImpl implements UserService{
-private Logger logger = LoggerFactory.getLogger(getClass());
+	
+	private static final int MAX_NAME_LENGTH = 45;
+	
+	private static final int MAX_PASSWORD_LENGTH = 15;
 	
 	@Autowired
 	private UserDao userDao;
@@ -22,7 +25,12 @@ private Logger logger = LoggerFactory.getLogger(getClass());
 	@Override
 	@Transactional
 	public User getUserByUserId(int userId){	
-		return userDao.getUserByUserId(userId);
+		
+		User found= userDao.getUserByUserId(userId);
+		if(found==null){
+			throw new InvalidFieldException("user not found"+ userId);
+		}
+		return found;
 	}
 	
 	@Override
@@ -46,6 +54,21 @@ private Logger logger = LoggerFactory.getLogger(getClass());
 	@Override
 	@Transactional
 	public User addUser(User user){
+		if(StringUtils.isEmpty(user.getPassword()) || user.getPassword().length()>MAX_PASSWORD_LENGTH){			
+			throw new InvalidFieldException("pin is required");
+		}
+		
+		if(StringUtils.isEmpty(user.getFirstName()) || user.getFirstName().length()>MAX_NAME_LENGTH){			
+			throw new InvalidFieldException("firstName is required");
+		}
+		
+		if(StringUtils.isEmpty(user.getLastName()) || user.getLastName().length()>MAX_NAME_LENGTH){			
+			throw new InvalidFieldException("lastName is required");
+		}
+		
+		if(StringUtils.isEmpty(user.getUserEmailId())){			
+			throw new InvalidFieldException("Email is required");
+		}
 			return getUserByUserId(userDao.addUser(user));	
 	}
 	

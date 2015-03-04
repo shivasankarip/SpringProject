@@ -20,10 +20,10 @@ public interface User {
 
 	void setLastName(String lastName);
 
-	void setPhone(Integer phone);
-
-	Integer getPhone();
+	int getPhone();
 
 	void setUserId(int userId);
+
+	void setPhone(int phone);
 
 }
