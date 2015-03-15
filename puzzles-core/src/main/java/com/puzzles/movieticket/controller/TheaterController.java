@@ -41,10 +41,11 @@ private Logger logger = LoggerFactory.getLogger(getClass());
 			return(new HttpTheater(theater));
 	}
 	
-	@GET
+	/*@GET
 	@Path("/")
 	public List<HttpTheater> getTheaterByName(@QueryParam("theaterName") String theaterName) throws PuzzlesException{
-		
+		*/
+	public List<HttpTheater> getTheaterByName(String theaterName) {
 		logger.info("getting theater by name:");
 		List<Theater> theater=theaterService.getTheaterByTheaterName(theaterName);
 		List<HttpTheater> returnList= new ArrayList<>(theater.size());
@@ -67,11 +68,12 @@ private Logger logger = LoggerFactory.getLogger(getClass());
 		return returnList ;
 	}
 	
-	
+	/*
 	@GET
 	@Path("/city/{theaterCity}")
 	public List<HttpTheater> getTheaterByCity(@PathParam("theaterCity") String theaterCity) throws PuzzlesException{
-		
+	*/	
+	public List<HttpTheater> getTheaterByCity(String theaterCity) {
 		logger.info("getting theater by city :");
 		List<Theater> theater=theaterService.getTheaterByTheaterCity(theaterCity);
 		List<HttpTheater> returnList= new ArrayList<>(theater.size());

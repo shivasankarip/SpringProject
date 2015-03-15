@@ -36,18 +36,18 @@ public class TheaterServiceImpl implements TheaterService{
 	@Override
 	public List<Theater> getTheaterByTheaterName(String theaterName){
 		List<Theater> found= theaterDao.getTheaterByTheaterName(theaterName);
-		if(found.size()==0){
+		/*if(found.size()==0){
 			throw new InvalidFieldException("theater not found for name :"+ theaterName);
-		}
+		}*/
 		return found;
 	}
 	
 	@Override
 	public List<Theater> getTheaterByTheaterCity(String theaterCity){
 		List<Theater> found= theaterDao.getTheaterByTheaterCity(theaterCity);
-		if(found.size()==0){
+		/*if(found.size()==0){
 			throw new InvalidFieldException("theater not found for city :"+ theaterCity);
-		}
+		}*/
 		return found;
 	}
 
