@@ -1,15 +1,20 @@
 package com.puzzles.movieticket.domain.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.puzzles.movieticket.domain.Movie;
+import com.puzzles.movieticket.domain.ShowMaster;
 
 @Entity
 @Table(name="movie")
@@ -30,6 +35,21 @@ public class MovieImpl implements Movie {
 
 	@Column(name="movie_duration")
 	private int movieDuration;
+
+	@OneToMany(mappedBy ="movie", targetEntity=ShowMasterImpl.class, cascade=CascadeType.ALL)
+	private List<ShowMaster> show;
+	
+	public List<ShowMaster> getShow() {
+		return show;
+	}
+
+	public void setShow(ShowMaster show) {
+		if(this.show==null){
+			this.show = new ArrayList<ShowMaster>();
+		}
+		this.show.add(show);
+	
+	}
 
 	@Override
 	public int getMovieId() {

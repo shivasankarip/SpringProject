@@ -2,13 +2,19 @@ package com.puzzles.movieticket.domain.impl;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.puzzles.movieticket.domain.ShowMaster;
 import com.puzzles.movieticket.domain.Theater;
 
 
@@ -42,6 +48,22 @@ public class TheaterImpl implements Theater{
 	
 	@Column(name="no_of_screens")
 	private int screenNo;
+	
+	
+	@OneToMany(mappedBy ="theater", targetEntity=ShowMasterImpl.class, cascade=CascadeType.ALL)
+	private List<ShowMaster> show;
+	
+	public List<ShowMaster> getShow() {
+		return show;
+	}
+
+	public void setShow(ShowMaster show) {
+		if(this.show==null){
+			this.show = new ArrayList<ShowMaster>();
+		}
+		this.show.add(show);
+	
+	}
 	
 	@Override
 	public int getTheaterId() {

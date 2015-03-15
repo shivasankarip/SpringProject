@@ -28,12 +28,15 @@ public class MovieController {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
+
 	@Autowired
 	private MovieService movieService;
 	
-	@GET
-	@Path("/")	
-	public List<HttpMovie> getMovieByName(@QueryParam("movieName") String movieName){
+	//@GET
+	//@Path("/")	
+	//public List<HttpMovie> getMovieByName(@QueryParam("movieName") String movieName){
+	public List<HttpMovie> getMovieByName(String movieName){
+
 		logger.info("getting movie by movie name:"+movieName);
 		List<Movie> movie=movieService.getMovieByMovieName(movieName);
 		List<HttpMovie> returnList= new ArrayList<>(movie.size());
@@ -63,4 +66,6 @@ public class MovieController {
 		}
 		return returnList ;
 	}
+	
+	
 }
