@@ -36,6 +36,11 @@ public class MovieImpl implements Movie {
 	@Column(name="movie_duration")
 	private int movieDuration;
 
+	@Column(name="movie_poster")
+	private String moviePoster;
+	
+	
+
 	@OneToMany(mappedBy ="movie", targetEntity=ShowMasterImpl.class, cascade=CascadeType.ALL)
 	private List<ShowMaster> show;
 	
@@ -101,5 +106,14 @@ public class MovieImpl implements Movie {
 		this.movieDuration = movieDuration;
 	}
 	
+	@Override
+	public String getMoviePoster() {
+		return moviePoster;
+	}
+	
+	@Override
+	public void setMoviePoster(String moviePoster) {
+		this.moviePoster = moviePoster;
+	}
 	
 }

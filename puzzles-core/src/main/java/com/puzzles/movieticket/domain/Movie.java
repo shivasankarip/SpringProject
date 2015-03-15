@@ -24,6 +24,10 @@ public interface Movie {
 
 	void setMovieDuration(int movieDuration);
 
+	String getMoviePoster();
+
+	void setMoviePoster(String moviePoster);
+
 
 
 }

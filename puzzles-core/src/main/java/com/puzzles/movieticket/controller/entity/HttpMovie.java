@@ -25,6 +25,9 @@ public class HttpMovie {
 	@XmlElement
 	public int movieDuration;
 	
+	@XmlElement
+	public String moviePoster;
+	
 	protected HttpMovie(){}
 	
 	public HttpMovie(Movie movie){
@@ -33,6 +36,7 @@ public class HttpMovie {
 		this.movieLanguage=movie.getMovieLanguage();
 		this.releaseDate=movie.getReleaseDate();
 		this.movieDuration=movie.getMovieDuration();
+		this.moviePoster=movie.getMoviePoster(); 
 	}
 	
 }
