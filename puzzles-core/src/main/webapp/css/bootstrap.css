@@ -282,14 +282,14 @@ a:focus {
 [class*="span"] {
   float: left;
   min-height: 1px;
-  margin-left: 15px;
+  margin-left: 20px;
 }
 
 .container,
 .navbar-static-top .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-  width: 1000px;
+  width: 940px;
 }
 
 .span12 {
@@ -325,7 +325,7 @@ a:focus {
 }
 
 .span4 {
-  width: 460px;
+  width: 300px;
 }
 
 .span3 {

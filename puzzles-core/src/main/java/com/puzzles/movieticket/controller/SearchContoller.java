@@ -10,11 +10,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.jboss.resteasy.annotations.providers.jaxb.Wrapped;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import com.puzzles.movieticket.controller.entity.HttpMovie;
 import com.puzzles.movieticket.controller.entity.HttpSearch;
@@ -41,9 +47,70 @@ public class SearchContoller {
 	
 	
 	@GET
-	@Path("/")	
-	@Wrapped(element="searchResult")
-	public List<HttpSearch> getSearchResults(@QueryParam("searchText") String searchText){
+	@Path("/")
+	@Wrapped(element = "searchResult")
+	public @ResponseBody String getSearchResults(@QueryParam("searchText") String searchText)  {
+		JSONObject json = new JSONObject();
+		if (searchText == null) {
+			throw new InvalidFieldException("Search text is empty");
+		} else {
+			logger.info("searching movie and theater by the search text:"+ searchText);
+			if (!searchText.isEmpty() && searchText != null) {
+				List<HttpMovie> hmovieResultList = movie.getMovieByName(searchText);
+				List<HttpTheater> htheaterResultList = theater.getTheaterByName(searchText);
+				htheaterResultList.addAll(theater.getTheaterByCity(searchText));
+
+				if (validate.validateZip(searchText)) {
+					htheaterResultList.addAll(theater.getTheaterByZip(Integer.parseInt(searchText)));
+				}
+				if((hmovieResultList.size()==0) && (htheaterResultList.size()==0)){
+					logger.info("No search results for the given text :"+ searchText);
+					throw new InvalidFieldException("No search results for the given text :" + searchText);
+				}
+				
+				JSONArray movieArray=new JSONArray();
+				
+				for(HttpMovie hmovie: hmovieResultList){
+					
+					JSONObject movieObj=new JSONObject();
+					
+					movieObj.put("ID", hmovie.movieId);
+					movieObj.put("name", hmovie.movieName);
+					movieObj.put("duration",hmovie.movieDuration);
+					movieObj.put("Language", hmovie.movieLanguage);
+					movieObj.put("releaseDate",hmovie.releaseDate);
+					movieObj.put("poster",hmovie.moviePoster);
+					
+					 movieArray.add(movieObj);
+				}
+				json.put("Movie", movieArray);
+				
+				JSONArray theaterArray=new JSONArray();
+				
+				for(HttpTheater htheater: htheaterResultList){
+					JSONObject theaterObj=new JSONObject();
+					
+					theaterObj.put("ID", htheater.theaterId);
+					theaterObj.put("name", htheater.theaterName);
+					theaterObj.put("Address", htheater.theaterAddressLine);
+					theaterObj.put("city", htheater.theaterCity);
+					theaterObj.put("Zip", htheater.theaterZip);
+					
+					theaterArray.add(theaterObj);
+				}
+				
+				json.put("Theater", theaterArray);
+				
+				
+			}
+		}
+		return json.toString();
+
+	}
+	
+	
+	
+/*	public List<HttpSearch> getSearchResults(@QueryParam("searchText") String searchText){
 		logger.info("searching movie and theater by the search text:"+ searchText);
 		List<HttpSearch> searchList = new ArrayList<HttpSearch>();
 		if (!searchText.isEmpty() && searchText != null) {
@@ -75,5 +142,5 @@ public class SearchContoller {
 		}
 		return searchList;
 		
-	}
+	}*/
 }

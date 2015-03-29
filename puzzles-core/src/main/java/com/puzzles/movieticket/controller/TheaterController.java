@@ -46,7 +46,7 @@ private Logger logger = LoggerFactory.getLogger(getClass());
 	public List<HttpTheater> getTheaterByName(@QueryParam("theaterName") String theaterName) throws PuzzlesException{
 		*/
 	public List<HttpTheater> getTheaterByName(String theaterName) {
-		logger.info("getting theater by name:");
+		logger.info("getting theater by name: "+theaterName);
 		List<Theater> theater=theaterService.getTheaterByTheaterName(theaterName);
 		List<HttpTheater> returnList= new ArrayList<>(theater.size());
 		for(Theater found:theater){
@@ -59,7 +59,7 @@ private Logger logger = LoggerFactory.getLogger(getClass());
 	@Path("/zip/{theaterZip}")
 	public List<HttpTheater> getTheaterByZip(@PathParam("theaterZip") int theaterZip) throws PuzzlesException{
 		
-		logger.info("getting theater by zip:");
+		logger.info("getting theater by zip: " +theaterZip);
 		List<Theater> theater=theaterService.getTheaterByTheaterZip(theaterZip);
 		List<HttpTheater> returnList= new ArrayList<>(theater.size());
 		for(Theater found:theater){
@@ -74,7 +74,7 @@ private Logger logger = LoggerFactory.getLogger(getClass());
 	public List<HttpTheater> getTheaterByCity(@PathParam("theaterCity") String theaterCity) throws PuzzlesException{
 	*/	
 	public List<HttpTheater> getTheaterByCity(String theaterCity) {
-		logger.info("getting theater by city :");
+		logger.info("getting theater by city :"+theaterCity);
 		List<Theater> theater=theaterService.getTheaterByTheaterCity(theaterCity);
 		List<HttpTheater> returnList= new ArrayList<>(theater.size());
 		for(Theater found:theater){

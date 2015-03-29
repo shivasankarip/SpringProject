@@ -1,6 +1,10 @@
 package com.puzzles.movieticket.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -47,25 +51,81 @@ public class MovieController {
 	}
 	
 	@GET
-	@Path("/{movieId}")	
-	public HttpMovie getMovieById(@PathParam("movieId") int movieId){
-		logger.info("getting movie by movie name:"+movieId);
+	@Path("/")	
+	public HttpMovie getMovieDetailsById(@QueryParam("movieId") int movieId){
+		logger.info("getting movie by movie Id:"+movieId);
 		Movie movie=movieService.getMovieByMovieId(movieId);
+		
 			return(new HttpMovie(movie));
 	}
 	
+	
+	
 	@GET
 	@Path("/currentMovies")
-	public List<HttpMovie> getAllMovie(){
+	public List<HttpMovie> getAllMovie() throws ParseException{
 		
 		logger.info("getting all movie:");
 		List<Movie> movie=movieService.getAllCurrentMovie();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date today =sdf.parse(sdf.format(new Date()));
 		List<HttpMovie> returnList= new ArrayList<>(movie.size());
 		for(Movie found:movie){
-			returnList.add(new HttpMovie(found));
+			Date movieDate=sdf.parse(sdf.format(found.getReleaseDate()));
+			if(movieDate.before(today) || movieDate.equals(today)){
+					returnList.add(new HttpMovie(found));
+			}
 		}
 		return returnList ;
 	}
+	
+	
+	@GET
+	@Path("/upComingMovies")
+	public List<HttpMovie> getUpComingMovie() throws ParseException{
+		
+		logger.info("getting up coming movie:");
+		List<Movie> movie=movieService.getAllCurrentMovie();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date today =sdf.parse(sdf.format(new Date()));
+		//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date()); // Now use today date.
+		c.add(Calendar.DATE, 7); // Adding 7 days
+		Date weeklater=sdf.parse(sdf.format(c.getTime()));
+		List<HttpMovie> returnList= new ArrayList<>(movie.size());
+		for(Movie found: movie){
+			Date movieDate=sdf.parse(sdf.format(found.getReleaseDate()));
+			if(movieDate.before(weeklater) && movieDate.after(today) ){
+				//if(movieDate.compareTo(today)< 7)
+					returnList.add(new HttpMovie(found));
+			}
+		
+		}
+		return returnList ;
+	}
+	
+	@GET
+	@Path("/comingSoonMovies")
+	public List<HttpMovie> comingSoonMovie() throws ParseException{
+		
+		logger.info("getting all movie:");
+		List<Movie> movie=movieService.getAllCurrentMovie();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date today =sdf.parse(sdf.format(new Date()));
+		List<HttpMovie> returnList= new ArrayList<>(movie.size());
+		for(Movie found: movie){
+			Date movieDate=sdf.parse(sdf.format(found.getReleaseDate()));
+			if(movieDate.after(today)){
+					returnList.add(new HttpMovie(found));
+			}
+		
+		}
+		return returnList ;
+	}
+	
+	
+	
 	
 	
 }
