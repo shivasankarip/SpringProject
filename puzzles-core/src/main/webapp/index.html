@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en" ng-app="puzzlesApp">
+<head>
+<meta charset="utf-8">
+<title>Puzzles-A gateway to Entertainment</title>
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+<script src="js/angular.min.js"></script>
+<script src="js/puzzlesController.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Puzzles</h1>         
+        <div class="row">            
+            <div class="span4" style="width:500px;">
+                <!-- Customer search -->
+                <div ng-controller="searchController">
+                    <h3>Find Movie or Theater</h3>
+                    <p ng-class="{'alert alert-error':errorStatus,'alert alert-success':!errorStatus}">{{messageText}}</p>
+                    Search :<input ng-model="searchText" placeholder="Movie/Theater/Zip/City "/> 
+                    <a class="btn btn-success" ng-click="search()"><i class="icon-search"></i> Search</a>
+                    <div>
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Movie/Theater Name</th>
+                                    <th>Movie Language/Theater city</th>
+                                    <th>Movie release date/Theater Zip</th>
+                                    <th>Movie duration in min/Theater helpline no</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="search in searchResult">
+                                    <td>{{search.Movie.ID}}{{search.Theater.Id}}</td>
+                                    <td>{{search.search.hMovie.movieName}}{{search.search.hTheater.theaterName}}</td>
+                                    <td>{{search.search.hMovie.movieLanguage}}{{search.search.hTheater.theaterCity}}</td>
+                                    <td>{{search.search.hMovie.releaseDate}}{{search.search.hTheater.theaterZip}}</td>
+                                    <td>{{search.search.hMovie.movieDuration}}{{search.search.hTheater.helpLineNo}}</td>
+                                </tr>
+                            </tbody>
+                        </table>                        
+                    </div>  
+                                         
+                    <div class="muted">
+                        <h6>DEBUG</h6>
+                        <p>HTTP Response status {{httpStatus}}</p>
+                        <p>HTTP Response body {{httpData | json}}</p>                      
+                    </div>                    
+                </div>                
+          </div>
+             <div class="span4" style="width:350px;">
+                <!-- New Customer -->
+                <div ng-controller="puzzlesAddUserController">
+                    <h3><i class="icon-user"></i> New Signup</h3>
+                    <p ng-class="{'alert alert-error':errorStatus,'alert alert-success':!errorStatus}">{{messageText}}</p>
+                    First Name :<input ng-model="createFirstName" /><br/>
+                    Last Name  :<input ng-model="createLastName" /><br/>
+                    Email Id   :<input ng-model="createEmailId"/><br/> 
+                    Password   :<input ng-model="createPassword" /><br/>
+                    Phone      :<input ng-model="createPhone" /><br/>
+                    <a class="btn btn-success" ng-click="create()"><i class="icon-plus-sign"></i> Create User</a>
+                    
+                    
+                    <div class="muted">
+                        <h6>DEBUG</h6>
+                        <p>HTTP Response status {{httpStatus}}</p>
+                        <p>HTTP Response body {{httpData | json}}</p>                      
+                    </div>
+                </div>
+            </div>
+            
+            
+       
+        </div> 
+        
+        
+        <div ng-controller="puzzlesMovieController">
+     
+         <a ng-init="getNowPlaying()" ng-click="getNowPlaying()"> Now Playing </a>
+         <a ng-click="getThisWeek()"> Opening this week</a>
+         <a ng-click="comingSoon()"> Coming soon</a>
+      
+                    <div>
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Movie Name</th>
+                                    <th>Movie Language</th>
+                                    <th>Movie release date</th>
+                                    <th>Movie duration in min</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            selection={{selection}}
+                            <div ng-switch on="selection">
+                            <div ng-switch-when="NowPlaying" >
+                                <tr  ng-repeat="movie in movieResult" >
+                                    <td><div ng-controller="movieDetailsController">
+                                    <a ng-click="movieDetail(movie.movie.movieId)" >{{movie.movie.movieId}}</a></div></td>
+                                    <td>{{movie.movie.movieName}}</td>
+                                    <td>{{movie.movie.movieLanguage}}</td>
+                                    <td>{{movie.movie.releaseDate}}</td>
+                                    <td>{{movie.movie.movieDuration}}</td>
+                                </tr></div>
+                                <div ng-switch-when="week">
+                                <tr ng-repeat="movie in movieWeekResult"  >
+                                    <td>{{movie.movie.movieId}}</td>
+                                    <td>{{movie.movie.movieName}}</td>
+                                    <td>{{movie.movie.movieLanguage}}</td>
+                                    <td></td>
+                                    <td>{{movie.movie.movieDuration}}</td>
+                                </tr></div>
+                                <div ng-switch-when="soon" >
+                                <tr ng-repeat="movie in movieSoonResult" >
+                                    <td>{{movie.movie.movieId}}</td>
+                                    <td>{{movie.movie.movieName}}</td>
+                                    <td>{{movie.movie.movieLanguage}}</td>
+                                    <td></td>
+                                    <td>{{movie.movie.movieDuration}}</td>
+                                </tr></div>
+                                </div>
+                                 
+                            </tbody>
+                        </table>                        
+                    </div>  
+                 
+ <!--                            
+                    <div>
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Movie Name</th>
+                                    <th>Movie Language</th>
+                                    <th>Movie release date</th>
+                                    <th>Movie duration in min</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="movie in movieThisWeekResult">
+                                    <td>{{movie.movie.movieId}}</td>
+                                    <td>{{movie.movie.movieName}}</td>
+                                    <td>{{movie.movie.movieLanguage}}</td>
+                                    <td>{{movie.movie.releaseDate}}</td>
+                                    <td>{{movie.movie.movieDuration}}</td>
+                                </tr>
+                            </tbody>
+                        </table>                        
+                    </div> -->
+        
+        </div>       
+ </div>
+</body>
+</html>
