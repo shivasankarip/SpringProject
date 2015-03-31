@@ -1,5 +1,7 @@
 package com.puzzles.movieticket.domain;
 
+import java.util.Date;
+
 public interface ShowMaster {
 
 
@@ -13,10 +15,14 @@ public interface ShowMaster {
 
 	void setMovie(Movie movie);
 
-	String getShowTime();
-
-	void setShowTime(String showTime);
+	Date getShowTime();
 
 	int getShowId();
+
+	void setShowTime(Date showTime);
+
+	Date getShowDate();
+
+	void setShowDate(Date showDate);
 
 }

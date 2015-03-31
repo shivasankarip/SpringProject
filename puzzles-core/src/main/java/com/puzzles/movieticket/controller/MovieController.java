@@ -42,10 +42,12 @@ public class MovieController {
 	public List<HttpMovie> getMovieByName(String movieName){
 
 		logger.info("getting movie by movie name:"+movieName);
+		movieName=movieName.toUpperCase();
 		List<Movie> movie=movieService.getMovieByMovieName(movieName);
 		List<HttpMovie> returnList= new ArrayList<>(movie.size());
 		for(Movie found:movie){
 			returnList.add(new HttpMovie(found));
+			logger.info("getting movie by movie name:"+movieName);
 		}
 		return returnList ;
 	}

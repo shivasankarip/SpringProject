@@ -29,6 +29,35 @@ puzzlesApp.controller('searchController', function($scope, $http) {
 				$scope.messageText=data.error.code+ " "+ data.error.message;
 			});		
 	};
+	
+	
+	
+	$scope.movieDetail = function(movieId) {
+		//remove current results
+		$scope.searchResult = [];
+		$scope.messageText="";
+		
+		//search
+		$http.get('/puzzles-core/rest/movies',		
+			{params: {
+				movieId:movieId}})
+			.success(function(data, status) {
+				alert(JSON.stringify(data));
+				$scope.httpStatus = status;
+				$scope.httpData = data;
+				$scope.errorStatus=false;
+				$scope.messageText="Found ";
+				$scope.movieDetailResult= data;
+				
+		        
+			})
+			.error(function(data, status) {
+				$scope.httpStatus = status;				
+				$scope.httpData = data;
+				$scope.errorStatus=true;
+				$scope.messageText=data.error.code+ " "+ data.error.message;
+			});		
+	};
 });
 
 puzzlesApp.controller('puzzlesAddUserController', function($scope, $http) {	
@@ -145,7 +174,7 @@ puzzlesApp.controller('movieDetailsController', function($scope, $http) {
 		$scope.messageText="";
 		
 		//search
-		$http.get('/puzzles-core/rest/movies',		
+		$http.get('/puzzles-core/rest/show',		
 			{params: {
 				movieId:movieId}})
 			.success(function(data, status) {

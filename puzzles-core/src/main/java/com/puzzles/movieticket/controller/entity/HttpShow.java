@@ -1,5 +1,7 @@
 package com.puzzles.movieticket.controller.entity;
 
+import java.util.Date;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -18,7 +20,10 @@ public class HttpShow {
 	public HttpMovie movie;
 	
 	@XmlElement
-	public String showTime;
+	public Date showDate;
+	
+	@XmlElement
+	public Date showTime;
 	
 	protected HttpShow(){}
 	
@@ -26,6 +31,7 @@ public class HttpShow {
 		this.showId=show.getShowId();
 		this.theater=new HttpTheater(show.getTheater());
 		this.movie=new HttpMovie(show.getMovie());
+		this.showDate=show.getShowDate();
 		this.showTime=show.getShowTime();
 	}
 	

@@ -1,6 +1,9 @@
 package com.puzzles.movieticket.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -9,7 +12,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -20,7 +22,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 
 import com.puzzles.movieticket.controller.entity.HttpMovie;
 import com.puzzles.movieticket.controller.entity.HttpSearch;
@@ -49,7 +50,7 @@ public class SearchContoller {
 	@GET
 	@Path("/")
 	@Wrapped(element = "searchResult")
-	public @ResponseBody String getSearchResults(@QueryParam("searchText") String searchText)  {
+	public @ResponseBody String getSearchResults(@QueryParam("searchText") String searchText) throws ParseException  {
 		JSONObject json = new JSONObject();
 		if (searchText == null) {
 			throw new InvalidFieldException("Search text is empty");
@@ -73,12 +74,15 @@ public class SearchContoller {
 				for(HttpMovie hmovie: hmovieResultList){
 					
 					JSONObject movieObj=new JSONObject();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					Date date =sdf.parse(sdf.format(hmovie.releaseDate));
+					
 					
 					movieObj.put("ID", hmovie.movieId);
 					movieObj.put("name", hmovie.movieName);
 					movieObj.put("duration",hmovie.movieDuration);
 					movieObj.put("Language", hmovie.movieLanguage);
-					movieObj.put("releaseDate",hmovie.releaseDate);
+					movieObj.put("releaseDate",date);
 					movieObj.put("poster",hmovie.moviePoster);
 					
 					 movieArray.add(movieObj);

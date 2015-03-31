@@ -85,8 +85,10 @@
    <div class="bs-example" data-example-id="simple-thumbnails">
     <div class="row"  >
       <div class="col-sm-6 col-md-4"  ng-repeat="result in searchResult.Movie" style="width:300px; height:330px" >
-        <a href="#" class="thumbnail" ng-show="searchResult.Movie" style=" width: 220px; height: 260px;">
-          <img src="{{result.poster}}"  alt="{{result.ID}}" style=" width: 190px; height: 250px;">
+ 
+     
+        <a href="#" class="thumbnail" ng-show="searchResult.Movie" ng-click="movieDetail(result.ID)"  style=" width: 220px; height: 260px;">
+        <img src="{{result.poster}}"  alt="{{result.ID}}" style=" width: 190px; height: 250px;">
         <!--  <div class="caption" >
             <h3>{{result.name}}</h3>
            </div>  -->
@@ -141,8 +143,9 @@
 	<!-- end of search controller -->
 	
 	<!-- Start movie listing tab -->
+<div ng-controller="movieDetailsController">
 
-	<div class="container marketing" ng-controller="puzzlesMovieController">
+	<div class="container marketing" ng-controller="puzzlesMovieController" ng-hide="movieDetailResult">
 		<div class="panel panel-default">
 			<div class="panel-heading">Movies</div>
 			<div class="panel-body">
@@ -157,10 +160,10 @@
 					<div class="bs-example" data-example-id="simple-thumbnails"  >
 						<div class="row">
 							<div class="col-xs-6 col-md-3"  ng-repeat="movie in movieResult"  ng-hide="!movieResult" >
-							<div ng-controller="movieDetailsController">
+							
 								<a ng-click="movieDetail(movie.movie.movieId)" class="thumbnail"> <img
 									src="{{movie.movie.moviePoster}}" alt="{{movie.movie.movieName}}">
-								</a></div>
+								</a>
 							</div>
 							 <div class="col-xs-6 col-md-3"  ng-repeat="movie in movieWeekResult" ng-hide="!movieWeekResult">
 								<a href="#" class="thumbnail"> <img
@@ -180,6 +183,23 @@
 				</div>
 			</div>
 		</div>
+</div>
+
+<div ng-show="movieDetailResult">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{movieDetailResult.movie.movieName}}</h3>
+  </div>
+  <div class="panel-body" style="background: whitesmoke;">
+    Panel content
+  </div>
+</div>
+
+
+</div>
+
+
+
 </div>
 <!-- 	Marketing messaging and featurettes
     ==================================================

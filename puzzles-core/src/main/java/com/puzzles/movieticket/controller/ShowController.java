@@ -1,6 +1,10 @@
 package com.puzzles.movieticket.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -8,6 +12,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
@@ -40,10 +45,13 @@ public class ShowController {
 	}
 	
 	@GET
-	@Path("/movie/{movieId}")
-	public List<HttpShow> getShowByMovieId(@PathParam("movieId") int movieId){
+	@Path("/")
+	public List<HttpShow> getShowByMovieId(@QueryParam("movieId") int movieId) throws ParseException{
 		logger.info("getting Show details by movie id"+ movieId);
-		List<ShowMaster> showList=showService.getShowDetailsByMovieId(movieId);
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = sdf.parse(sdf.format(new Date()));
+		
+		List<ShowMaster> showList=showService.getShowDetailsByMovieIdAndDate(movieId,date);
 		List<HttpShow> tempList=new ArrayList<HttpShow>(showList.size());
 		for(ShowMaster found:showList){
 			tempList.add(new HttpShow(found));
@@ -61,5 +69,10 @@ public class ShowController {
 			tempList.add(new HttpShow(found));
 		}
 		return tempList;
+	}
+	
+	public List<ShowMaster> validateDateTime(List<ShowMaster> show){
+		return show;
+		
 	}
 }
