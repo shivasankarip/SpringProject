@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="icon" href="../../favicon.ico">
+<link rel="icon" href="img/m.jpeg">
 
-<title>Puzzles- A gateway to Entertainment</title>
+<title>MoveTix- A gateway to Entertainment</title>
 
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +40,7 @@
 								class="icon-bar"></span> <span class="icon-bar"></span> <span
 								class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="#">Puzzles</a>
+						<a class="navbar-brand" href="#">MovieTix</a>
 					</div>
 					<div id="navbar" class="navbar-collapse collapse" >
 						
@@ -94,9 +94,9 @@
            </div>  -->
         </a>
         </div>
-         <div class="col-sm-6 col-md-4" ng-repeat="result in searchResult.Theater" style="width:300px; height:330px">
+         <div class="col-sm-6 col-md-4" ng-repeat="result in searchResult.Theater" ng-click="theaterDetail(result.ID)" style="width:300px; height:330px">
         <a href="#" class="thumbnail"  ng-show="searchResult.Theater" style=" width: 220px; height: 260px;">
-          <img src="img/amc.jpg"  alt="{{result.ID}}" style=" width: 190px; height: 250px;">
+          <img src="{{result.state}}"  alt="{{result.name}}" style=" width: 190px; height: 250px;">
 
         </a>
       </div>
@@ -118,13 +118,13 @@
 				</ol>
 				<div class="carousel-inner" role="listbox">
 					<div class="item active">
-						<img src="img/avengers2.jpeg" alt="First slide">
+						<a ng-click="movieDetail(11);details(11)" ><img src="img/avengers2.jpeg" alt="First slide"></a>
 					</div>
 					<div class="item ">
-						<img src="img/Furious.jpg" alt="Second slide">
+					<a ng-click="movieDetail(5);details(5)" ><img src="img/Furious.jpg" alt="Second slide" style="width:1280px"></a>
 					</div>
 					<div class="item">
-						<img src="img/Cinderella.png" alt="Third slide">
+						<a ng-click="movieDetail(9);details(9)" ><img src="img/Cinderella.png" alt="Third slide"></a>
 					</div>
 				</div>
 			</div>
@@ -139,13 +139,13 @@
 			</a>
 		</div>
 <!-- end of carousel-->
-	</div>
+	
 	<!-- end of search controller -->
 	
 	<!-- Start movie listing tab -->
-<div ng-controller="movieDetailsController">
 
-	<div class="container marketing" ng-controller="puzzlesMovieController" ng-hide="movieDetailResult">
+
+	<div class="container marketing" ng-hide="movieDetailResult || theaterDetailResult">
 		<div class="panel panel-default">
 			<div class="panel-heading">Movies</div>
 			<div class="panel-body">
@@ -160,19 +160,19 @@
 					<div class="bs-example" data-example-id="simple-thumbnails"  >
 						<div class="row">
 							<div class="col-xs-6 col-md-3"  ng-repeat="movie in movieResult"  ng-hide="!movieResult" >
-							
-								<a ng-click="movieDetail(movie.movie.movieId)" class="thumbnail"> <img
+							<a ng-click="movieDetail(movie.movie.movieId);details(movie.movie.movieId)" class="thumbnail" ng-mouseover="{{movie.movie.movieName}}"> <img
 									src="{{movie.movie.moviePoster}}" alt="{{movie.movie.movieName}}">
+								
 								</a>
 							</div>
 							 <div class="col-xs-6 col-md-3"  ng-repeat="movie in movieWeekResult" ng-hide="!movieWeekResult">
-								<a href="#" class="thumbnail"> <img
+								<a ng-click="movieDetail(movie.movie.movieId);details(movie.movie.movieId) "  class="thumbnail"> <img
 									src="{{movie.movie.moviePoster}}" alt="{{movie.movie.movieName}}">
 								</a>
 							</div>
 							
 							 <div class="col-xs-6 col-md-3"  ng-repeat="movie in movieSoonResult"  ng-hide="!movieSoonResult">
-								<a href="#" class="thumbnail"> <img
+								<a ng-click="movieDetail(movie.movie.movieId);details(movie.movie.movieId)" class="thumbnail"> <img
 									src="{{movie.movie.moviePoster}}" alt="{{movie.movie.movieName}}">
 								</a>
 							</div>
@@ -186,17 +186,104 @@
 </div>
 
 <div ng-show="movieDetailResult">
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">{{movieDetailResult.movie.movieName}}</h3>
+<div class="panel panel-default" >  
+  <div class="panel-heading"  >
+  <div class="media">
+  <div class="media-left">
+  <a href="#" > <img src="{{movieDetailResult[0].show.movie.moviePoster}}" alt="{{movieDetailResult[0].show.movie.movieName}}" style="width: 100px";></a></div>
+    <div class="media-body" class="label label-info">
+   <h3 class="panel-title">{{movieDetailResult[0].show.movie.movieName}}</h3>
+   
+   <ul>
+   <li>Synopsis : {{detailResult.movieDetails.mSynopsis}} </li>
+   	<li>Release Date: {{movieDetailResult[0].show.movie.releaseDate |date:'dd-MMM-yyyy'}}</li>
+   	<li>Language: {{movieDetailResult[0].show.movie.movieLanguage}}</li><li> Duration:{{movieDetailResult[0].show.movie.movieDuration}}</li>
+   <li>Rating : {{detailResult.movieDetails.mProductions}}  <a href="http://{{detailResult.movieDetails.mTrailer}}">Watch Trailer here</a> </li>
+   
+    <li>Director :{{detailResult.movieDetails.mDirector}} </li>
+    <li>Stars : {{detailResult.movieDetails.mCast1}}, {{detailResult.movieDetails.mCast2}}, {{detailResult.movieDetails.mCast3}} </li>
+   </ul>
+    </div>
+</div>
+  
   </div>
-  <div class="panel-body" style="background: whitesmoke;">
-    Panel content
+
+<div class="panel-body" style="background: whitesmoke;">
+ 
+                     <div>
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Theater Name</th>
+                                    <th>Show date</th>
+                                    <th>Show timings</th>
+                                    <th>Available Tickets </th>
+                                    <th></th>
+                                     </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="result in movieDetailResult">
+                                <td>{{result.show.theater.theaterName}} {{result.show.theater.theaterCity}} {{result.show.theater.theaterZip}}</td>
+                                <td>{{result.show.showDate |date:'dd-MMM-yyyy'}}</td>
+                               		 <td>{{result.show.showTime |date:'HH:mm'}}</td>
+                               		 <td>{{result.show.ticketsAvail}}</td>
+                              <td> </select> <button class="btn btn-success" > Book </button></td>
+                            	</tr>
+                            </tbody>
+                        </table>                        
+                    </div>  
   </div>
 </div>
 
 
 </div>
+
+<div ng-show="theaterDetailResult">
+<div class="panel panel-default" >  
+  <div class="panel-heading"  >
+  <div class="media">
+  <div class="media-left">
+  <a href="#" > <img src="{{theaterDetailResult[0].show.theater.theaterState}}" alt="{{theaterDetailResult[0].show.theater.theaterName}}" style="width: 100px";></a></div>
+    <div class="media-body" class="label label-info">
+   <h3 class="panel-title">{{theaterDetailResult[0].show.theater.theaterName}}</h3>
+   <h4>{{theaterDetailResult[0].show.theater.theaterAddressLine}}, {{theaterDetailResult[0].show.theater.theaterCity}}, {{theaterDetailResult[0].show.theater.theaterZip}} </h4>
+   <p>Contact us on : {{theaterDetailResult[0].show.theater.helpLineNo}}
+        Screens: {{theaterDetailResult[0].show.theater.screenNo}}</p>
+    </div>
+</div>
+  
+  </div>
+
+<div class="panel-body" style="background: whitesmoke;">
+ 
+                     <div>
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Movie Name</th>
+                                    <th>Show date</th>
+                                    <th>Show timings</th>
+                                    <th>Available Tickets </th>
+                                    <th></th>
+                                     </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="result in theaterDetailResult">
+                                <td>{{result.show.movie.movieName}} </td>
+                                <td>{{result.show.showDate |date:'dd-MMM-yyyy'}}</td>
+                               		 <td>{{result.show.showTime |date:'HH:mm'}}</td>
+                               		 <td>{{result.show.ticketsAvail}}</td>
+                              <td> </select> <button class="btn btn-success" > Book </button></td>
+                            	</tr>
+                            </tbody>
+                        </table>                        
+                    </div>  
+  </div>
+</div>
+
+
+</div>
+
 
 
 

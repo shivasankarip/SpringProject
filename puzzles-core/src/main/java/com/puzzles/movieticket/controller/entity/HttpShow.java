@@ -25,6 +25,9 @@ public class HttpShow {
 	@XmlElement
 	public Date showTime;
 	
+	@XmlElement
+	public int ticketsAvail;
+	
 	protected HttpShow(){}
 	
 	public HttpShow(ShowMaster show){
@@ -33,6 +36,7 @@ public class HttpShow {
 		this.movie=new HttpMovie(show.getMovie());
 		this.showDate=show.getShowDate();
 		this.showTime=show.getShowTime();
+		this.ticketsAvail=show.getTicketsAvail();
 	}
 	
  

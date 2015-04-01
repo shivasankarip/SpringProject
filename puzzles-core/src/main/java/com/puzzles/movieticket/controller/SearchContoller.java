@@ -99,7 +99,7 @@ public class SearchContoller {
 					theaterObj.put("Address", htheater.theaterAddressLine);
 					theaterObj.put("city", htheater.theaterCity);
 					theaterObj.put("Zip", htheater.theaterZip);
-					
+					theaterObj.put("state", htheater.theaterState);
 					theaterArray.add(theaterObj);
 				}
 				

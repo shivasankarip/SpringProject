@@ -12,7 +12,7 @@ import com.puzzles.movieticket.domain.MovieDetails;
 @Table(name="movie_details")
 public class MovieDetailsImpl implements MovieDetails {
 	@Id
-	@Column(name="movie_id")
+	@Column(name="id")
 	private int movieId;
 	
 	@Column(name="movie_productions")

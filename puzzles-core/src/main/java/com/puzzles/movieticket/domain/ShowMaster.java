@@ -25,4 +25,8 @@ public interface ShowMaster {
 
 	void setShowDate(Date showDate);
 
+	int getTicketsAvail();
+
+	void setTicketsAvail(int ticketsAvail);
+
 }

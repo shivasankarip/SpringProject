@@ -44,6 +44,9 @@ public class ShowMasterImpl implements ShowMaster {
 	@Column(name="show_time")
 	@Temporal(TemporalType.TIME) 
 	private Date showTime;
+	
+	@Column(name="show_tixavail")
+	private int ticketsAvail;
 
 	@Override
 	public int getShowId() {
@@ -93,6 +96,14 @@ public class ShowMasterImpl implements ShowMaster {
 	@Override
 	public void setShowDate(Date showDate) {
 		this.showDate = showDate;
+	}
+	@Override
+	public int getTicketsAvail() {
+		return ticketsAvail;
+	}
+	@Override
+	public void setTicketsAvail(int ticketsAvail) {
+		this.ticketsAvail = ticketsAvail;
 	}
 	
 
