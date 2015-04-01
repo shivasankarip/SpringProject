@@ -1,9 +1,11 @@
 package com.puzzles.movieticket.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,6 +27,18 @@ public class ShowMasterDaoImpl implements ShowMasterDao {
 	public List<ShowMaster> getShowDetailsByMovieId(Movie movie){
 		Criteria crit = this.sessionFactory.getCurrentSession().createCriteria(ShowMasterImpl.class)
 				.add(Restrictions.eq("movie",movie));
+		List<ShowMaster> show=crit.list();
+		return  show;
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ShowMaster> getShowDetailsByMovieIdAndDate(Movie movie, Date date){
+		Criteria crit = this.sessionFactory.getCurrentSession().createCriteria(ShowMasterImpl.class)
+				.add(Restrictions.eq("movie",movie))
+				.add(Restrictions.eq("showDate", date));
+
 		List<ShowMaster> show=crit.list();
 		return  show;
 		

@@ -1,5 +1,6 @@
 package com.puzzles.movieticket.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -33,6 +34,13 @@ public class ShowMasterServiceImpl implements ShowMasterService{
 	@Override
 	public List<ShowMaster> getShowDetailsByMovieId(int movieId){
 		return  showMasterDao.getShowDetailsByMovieId(movieService.getMovieByMovieId(movieId));
+		
+	}
+	
+	@Override
+	public List<ShowMaster> getShowDetailsByMovieIdAndDate(int movieId,Date dateO){
+	
+		return  showMasterDao.getShowDetailsByMovieIdAndDate(movieService.getMovieByMovieId(movieId),dateO);
 		
 	}
 	

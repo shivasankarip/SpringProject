@@ -35,7 +35,7 @@ public class MovieDaoImpl implements MovieDao {
 	@SuppressWarnings("unchecked")
 	public  List<Movie> getMovieByMovieName(String movieName){
 		Criteria crit = this.sessionFactory.getCurrentSession().createCriteria(MovieImpl.class)
-				.add(Restrictions.eq("movieName",movieName));
+				.add(Restrictions.ilike("movieName",movieName+"%"));
 		List<Movie> movieList=crit.list();
 		
 		return movieList;

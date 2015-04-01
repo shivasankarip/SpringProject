@@ -30,6 +30,8 @@ public class MovieServiceImpl implements MovieService{
 		
 	}
 	
+	
+	
 	@Override
 	public Movie addMovie(Movie movie){
 		return getMovieByMovieId(movieDao.addMovie(movie));

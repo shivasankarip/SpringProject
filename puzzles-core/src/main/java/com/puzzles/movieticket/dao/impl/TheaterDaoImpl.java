@@ -36,7 +36,7 @@ public class TheaterDaoImpl implements TheaterDao {
 	@SuppressWarnings("unchecked")
 	public  List<Theater> getTheaterByTheaterName(String theaterName){
 		Criteria crit = this.sessionFactory.getCurrentSession().createCriteria(TheaterImpl.class)
-				.add(Restrictions.eq("theaterName",theaterName));
+				.add(Restrictions.ilike("theaterName",theaterName+"%"));
 		List<Theater> theaterList=crit.list();
 		return theaterList;
 	}
@@ -45,7 +45,7 @@ public class TheaterDaoImpl implements TheaterDao {
 	@SuppressWarnings("unchecked")
 	public  List<Theater> getTheaterByTheaterCity(String theaterCity){
 		Criteria crit = this.sessionFactory.getCurrentSession().createCriteria(TheaterImpl.class)
-				.add(Restrictions.eq("theaterCity",theaterCity));
+				.add(Restrictions.ilike("theaterCity",theaterCity+"%"));
 		List<Theater> theaterList=crit.list();
 		return theaterList;
 	}
@@ -54,7 +54,7 @@ public class TheaterDaoImpl implements TheaterDao {
 	@SuppressWarnings("unchecked")
 	public  List<Theater> getTheaterByTheaterZip(int theaterZip){
 		Criteria crit = this.sessionFactory.getCurrentSession().createCriteria(TheaterImpl.class)
-				.add(Restrictions.eq("theaterZip",theaterZip));
+				.add(Restrictions.like("theaterZip",theaterZip));
 		List<Theater> theaterList=crit.list();
 		return theaterList;
 	}

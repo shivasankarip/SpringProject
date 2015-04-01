@@ -21,7 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.puzzles.movieticket.controller.entity.HttpMovie;
+import com.puzzles.movieticket.controller.entity.HttpMovieDetails;
 import com.puzzles.movieticket.domain.Movie;
+import com.puzzles.movieticket.domain.MovieDetails;
+import com.puzzles.movieticket.service.MovieDetailsService;
 import com.puzzles.movieticket.service.MovieService;
 
 @Path("/movies")
@@ -36,27 +39,32 @@ public class MovieController {
 	@Autowired
 	private MovieService movieService;
 	
+	@Autowired
+	private MovieDetailsService detailsService;
+	
 	//@GET
 	//@Path("/")	
 	//public List<HttpMovie> getMovieByName(@QueryParam("movieName") String movieName){
 	public List<HttpMovie> getMovieByName(String movieName){
 
 		logger.info("getting movie by movie name:"+movieName);
+		movieName=movieName.toUpperCase();
 		List<Movie> movie=movieService.getMovieByMovieName(movieName);
 		List<HttpMovie> returnList= new ArrayList<>(movie.size());
 		for(Movie found:movie){
 			returnList.add(new HttpMovie(found));
+			logger.info("getting movie by movie name:"+movieName);
 		}
 		return returnList ;
 	}
 	
 	@GET
 	@Path("/")	
-	public HttpMovie getMovieDetailsById(@QueryParam("movieId") int movieId){
-		logger.info("getting movie by movie Id:"+movieId);
-		Movie movie=movieService.getMovieByMovieId(movieId);
+	public HttpMovieDetails getMovieDetailsById(@QueryParam("movieId") int movieId){
+		logger.info("getting movie details by movie Id:"+movieId);
+		MovieDetails movie=detailsService.getMovieDetailsByMovieId(movieId);
 		
-			return(new HttpMovie(movie));
+			return(new HttpMovieDetails(movie));
 	}
 	
 	

@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.puzzles.movieticket.domain.Movie;
 import com.puzzles.movieticket.domain.ShowMaster;
@@ -19,6 +21,7 @@ import com.puzzles.movieticket.domain.ShowMaster;
 @Entity
 @Table(name="movie")
 public class MovieImpl implements Movie {
+	
 	@Id
 	@Column(name="movie_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -31,6 +34,7 @@ public class MovieImpl implements Movie {
 	private String movieLanguage;
 	
 	@Column(name="release_date")
+	@Temporal(TemporalType.DATE) 
 	private Date releaseDate;
 
 	@Column(name="movie_duration")

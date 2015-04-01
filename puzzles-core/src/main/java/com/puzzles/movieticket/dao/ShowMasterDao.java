@@ -1,5 +1,6 @@
 package com.puzzles.movieticket.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.puzzles.movieticket.domain.Movie;
@@ -13,5 +14,7 @@ public interface ShowMasterDao {
 	List<ShowMaster> getShowDetailsByTheaterId(Theater theater);
 
 	ShowMaster getShowDetailsByShowId(int showId);
+
+	List<ShowMaster> getShowDetailsByMovieIdAndDate(Movie movie, Date date);
 
 }

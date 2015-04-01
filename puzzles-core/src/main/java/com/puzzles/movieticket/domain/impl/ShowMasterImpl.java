@@ -2,6 +2,8 @@ package com.puzzles.movieticket.domain.impl;
 
 
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.puzzles.movieticket.domain.Movie;
 import com.puzzles.movieticket.domain.ShowMaster;
@@ -33,8 +37,16 @@ public class ShowMasterImpl implements ShowMaster {
 	@JoinColumn(name="movie_id")
 	private Movie movie;
 	
-	@Column(name="showtime")
-	private String showTime;
+	@Column(name="show_date")
+	@Temporal(TemporalType.DATE) 
+	private Date showDate;
+	
+	@Column(name="show_time")
+	@Temporal(TemporalType.TIME) 
+	private Date showTime;
+	
+	@Column(name="show_tixavail")
+	private int ticketsAvail;
 
 	@Override
 	public int getShowId() {
@@ -67,13 +79,31 @@ public class ShowMasterImpl implements ShowMaster {
 	}
 
 	@Override
-	public String getShowTime() {
+	public Date getShowTime() {
 		return showTime;
 	}
 
 	@Override
-	public void setShowTime(String showTime) {
+	public void setShowTime(Date showTime) {
 		this.showTime = showTime;
+	}
+
+	@Override
+	public Date getShowDate() {
+		return showDate;
+	}
+
+	@Override
+	public void setShowDate(Date showDate) {
+		this.showDate = showDate;
+	}
+	@Override
+	public int getTicketsAvail() {
+		return ticketsAvail;
+	}
+	@Override
+	public void setTicketsAvail(int ticketsAvail) {
+		this.ticketsAvail = ticketsAvail;
 	}
 	
 
